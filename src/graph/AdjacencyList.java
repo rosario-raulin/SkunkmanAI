@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-public final class AdjacencyList<E extends INode> implements IGraph<E> {
+public final class AdjacencyList<E> implements IGraph<E> {
 
 	private final static class Edge<E> {
 		private final E target;
@@ -74,8 +74,8 @@ public final class AdjacencyList<E extends INode> implements IGraph<E> {
 	public void addEdge(E from, E to, int weight) {
 		int id = getId(from);
 		
-		if (nodes.get(id) == null) {
-			nodes.set(id, new Vector<Edge<E>>());
+		if (nodes.size() <= id) {
+			nodes.add(new Vector<Edge<E>>());
 		}
 		nodes.get(id).add(new Edge<E>(to, weight));		
 	}

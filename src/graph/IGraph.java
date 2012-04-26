@@ -2,7 +2,7 @@ package graph;
 
 import java.util.List;
 
-public interface IGraph<E extends INode> extends Iterable<E> {
+public interface IGraph<E> extends Iterable<E> {
 	void addNode(E node);
 	void removeNode(E node);
 	void addEdge(E from, E to, int weight);
