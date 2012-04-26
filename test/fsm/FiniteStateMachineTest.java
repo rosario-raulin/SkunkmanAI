@@ -8,22 +8,23 @@ public class FiniteStateMachineTest {
 
 	@Test
 	public void test() {
-		FiniteStateMachine fsm = null;
+		FiniteStateMachine fsm = new FiniteStateMachine(new Waiting());
+
 		try {
-			fsm = new FiniteStateMachine(new Eating());
-			fail("Could not create/enter FSM");
-		} catch (RuntimeException enter) {
+			fsm.changeState(new Eating());
+			fail("Could not change FSM state");
+		} catch (RuntimeException change) {
 			try {
-				fsm.changeState(new Waiting());
-				fail("Could not change FSM state");
-			} catch (RuntimeException change) {
+				fsm.revertToPreviousState();
+				fail("Could not revert to previous state");
+			} catch (RuntimeException previous) {
 				try {
-					fsm.revertToPreviousState();
-					fail("Could not revert to previous state");
-				} catch (RuntimeException previous) {
+					fsm.run();
+					fail("Could not start the FSM");
+				} catch (RuntimeException e) {
+					
 				}
 			}
 		}
 	}
-
 }
