@@ -1,4 +1,4 @@
-package rosario.raulin.de.graph;
+package graph;
 
 public interface IGraph<E extends INode> {
 
