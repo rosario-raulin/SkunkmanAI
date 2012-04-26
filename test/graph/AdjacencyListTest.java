@@ -33,7 +33,12 @@ public class AdjacencyListTest {
 		assertTrue(graph.getWeight("A", "B") == 10);
 		assertTrue(graph.getWeight("C", "B") == 20);
 		
-				
+		graph.removeNode("C");
+		try {
+			graph.getSuccessors("C");
+			assertTrue(false);
+		} catch (RuntimeException e) {
+		}
 	}
 
 }

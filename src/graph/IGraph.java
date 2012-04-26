@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IGraph<E> extends Iterable<E> {
 	void addNode(E node);
@@ -10,5 +11,8 @@ public interface IGraph<E> extends Iterable<E> {
 	void changeWeight(E from, E to, int weight);
 	
 	int getWeight(E from, E to);
+	Set<E> getNodes();
 	List<E> getSuccessors(E node);
+	
+	int size();
 }

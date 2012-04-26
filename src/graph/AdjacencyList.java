@@ -1,9 +1,12 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public final class AdjacencyList<E> implements IGraph<E> {
 
@@ -25,10 +28,10 @@ public final class AdjacencyList<E> implements IGraph<E> {
 		}
 	}
 	
-	private final Hashtable<E, ArrayList<Edge<E>>> nodes;
+	private final Hashtable<E, List<Edge<E>>> nodes;
 	
 	public AdjacencyList() {
-		nodes = new Hashtable<E, ArrayList<Edge<E>>>();
+		nodes = new Hashtable<E, List<Edge<E>>>();
 	}
 	
 	@Override
@@ -41,7 +44,7 @@ public final class AdjacencyList<E> implements IGraph<E> {
 		if (nodes.containsKey(node)) {
 			throw new RuntimeException("Node already in Graph");
 		} else {
-			nodes.put(node, new ArrayList<Edge<E>>());
+			nodes.put(node, new LinkedList<Edge<E>>());
 		}
 	}
 
@@ -50,8 +53,8 @@ public final class AdjacencyList<E> implements IGraph<E> {
 		nodes.remove(node);
 	}
 
-	private ArrayList<Edge<E>> getEdges(E from) {
-		ArrayList<Edge<E>> edges = nodes.get(from);
+	private List<Edge<E>> getEdges(E from) {
+		List<Edge<E>> edges = nodes.get(from);
 		if (edges == null) {
 			throw new RuntimeException("Node not in graph: " + from);
 		} else {
@@ -60,13 +63,12 @@ public final class AdjacencyList<E> implements IGraph<E> {
 	}
 	
 	private int indexOfEdge(E from, E to) {
-		ArrayList<Edge<E>> edges = getEdges(from);
-		for (int i = 0; i < edges.size(); ++i) {
-			if (edges.get(i).getTo() == to) {
-				return i;
-			}
+		int index = getSuccessors(from).indexOf(to);
+		if (index == -1) {
+			throw new RuntimeException("Edge not found: from " + from + " to " + to);
+		} else {
+			return index;
 		}
-		throw new RuntimeException("Edge not found: from " + from + " to " + to); 
 	}
 	
 	@Override
@@ -99,11 +101,21 @@ public final class AdjacencyList<E> implements IGraph<E> {
 	public List<E> getSuccessors(E node) {
 		List<E> succs = new ArrayList<E>();
 		
-		for (Edge<E> e : getEdges(node)) {
+		for (final Edge<E> e : getEdges(node)) {
 			succs.add(e.getTo());
 		}
 		
 		return succs;
+	}
+
+	@Override
+	public int size() {
+		return nodes.size();
+	}
+
+	@Override
+	public Set<E> getNodes() {
+		return Collections.unmodifiableSet(nodes.keySet());
 	}
 
 }
