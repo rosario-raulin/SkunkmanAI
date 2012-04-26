@@ -40,7 +40,7 @@ public final class DijkstraAlgorithm<E> implements IShortestPathAlgorithm<E> {
 		preds.clear();
 		distances.clear();
 		
-		for (E node : graph) {
+		for (final E node : graph) {
 			distances.put(node, INFINITY);
 			preds.put(node, null);
 		}
