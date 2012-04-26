@@ -1,9 +1,9 @@
 package graph;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 public final class AdjacencyList<E> implements IGraph<E> {
 
@@ -25,65 +25,63 @@ public final class AdjacencyList<E> implements IGraph<E> {
 		}
 	}
 	
-	private final Vector<Vector<Edge<E>>> nodes;
-	private final Hashtable<E, Integer> ids;
+	private final Hashtable<E, ArrayList<Edge<E>>> nodes;
 	
 	public AdjacencyList() {
-		nodes = new Vector<Vector<Edge<E>>>();
-		ids = new Hashtable<E, Integer>();
-	}
-	
-	private int getId(E node) {
-		Integer id = ids.get(node);
-		if (id == null) {
-			throw new RuntimeException("Node not in graph");
-		} else {
-			return id;
-		}
+		nodes = new Hashtable<E, ArrayList<Edge<E>>>();
 	}
 	
 	@Override
 	public Iterator<E> iterator() {
-		return ids.keySet().iterator();
+		return nodes.keySet().iterator();
 	}
 
 	@Override
 	public void addNode(E node) {
-		if (ids.containsKey(node)) {
-			throw new RuntimeException("Node already in graph");
+		if (nodes.containsKey(node)) {
+			throw new RuntimeException("Node already in Graph");
 		} else {
-			ids.put(node, nodes.size());
+			nodes.put(node, new ArrayList<Edge<E>>());
 		}
 	}
 
 	@Override
 	public void removeNode(E node) {
-		int id = getId(node);
-		ids.remove(node);
-		nodes.remove(id);
-		// We need to update the key IDs since they are shifted left
-		for (E key : ids.keySet()) {
-			int old = ids.get(key);
-			if (old > id) {
-				ids.put(key, old - 1);
+		nodes.remove(node);
+	}
+
+	private ArrayList<Edge<E>> getEdges(E from) {
+		ArrayList<Edge<E>> edges = nodes.get(from);
+		if (edges == null) {
+			throw new RuntimeException("Node not in graph: " + from);
+		} else {
+			return edges;
+		}
+	}
+	
+	private int indexOfEdge(E from, E to) {
+		ArrayList<Edge<E>> edges = getEdges(from);
+		for (int i = 0; i < edges.size(); ++i) {
+			if (edges.get(i).getTo() == to) {
+				return i;
 			}
 		}
+		throw new RuntimeException("Edge not found: from " + from + " to " + to); 
 	}
 	
 	@Override
 	public void addEdge(E from, E to, int weight) {
-		int id = getId(from);
-		
-		if (nodes.size() <= id) {
-			nodes.add(new Vector<Edge<E>>());
+		try {
+			indexOfEdge(from, to);
 		}
-		nodes.get(id).add(new Edge<E>(to, weight));		
+		catch (RuntimeException e) {
+			getEdges(from).add(new Edge<E>(to, weight));
+		}
 	}
 
 	@Override
 	public void removeEdge(E from, E to) {
-		// FIXME: This will not work!
-		nodes.get(getId(from)).remove(to);
+		getEdges(from).remove(indexOfEdge(from, to));
 	}
 
 	@Override
@@ -94,24 +92,18 @@ public final class AdjacencyList<E> implements IGraph<E> {
 
 	@Override
 	public int getWeight(E from, E to) {
-		// FIXME: This will not work!
-		int index = nodes.get(getId(from)).indexOf(to);
-		if (index == -1) {
-			throw new RuntimeException("Edge does not exist");
-		} else {
-			return nodes.get(getId(from)).get(index).getWeight();
-		}
+		return getEdges(from).get(indexOfEdge(from, to)).getWeight();
 	}
 
 	@Override
 	public List<E> getSuccessors(E node) {
-		List<E> successors = new Vector<E>();
+		List<E> succs = new ArrayList<E>();
 		
-		for (Edge<E> e : nodes.get(getId(node))) {
-			successors.add(e.getTo());
+		for (Edge<E> e : getEdges(node)) {
+			succs.add(e.getTo());
 		}
 		
-		return successors;
+		return succs;
 	}
 
 }

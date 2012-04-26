@@ -19,15 +19,21 @@ public class AdjacencyListTest {
 		graph.addEdge("C", "A", 5);
 		graph.addEdge("C", "B", 20);
 		
-		for (String s : graph) {
-			System.out.println(s);
-		}
-		
 		assertTrue(graph.getSuccessors("B").isEmpty());
 		
 		List<String> cSucc = graph.getSuccessors("C");
 		assertTrue(cSucc.contains("A"));
 		assertTrue(cSucc.contains("B"));
+		
+		graph.removeEdge("C", "A");
+		cSucc = graph.getSuccessors("C");
+		assertFalse(cSucc.contains("A"));
+		assertTrue(cSucc.contains("B"));
+		
+		assertTrue(graph.getWeight("A", "B") == 10);
+		assertTrue(graph.getWeight("C", "B") == 20);
+		
+				
 	}
 
 }
