@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 import java.util.Comparator;
 
-public final class DijkstraAlgorithm<E> implements IShortestPathAlgorithm<E> {
+public final class DijkstraAlgorithm<E> implements IPathFinder<E> {
 
 	private final static Integer INFINITY = Integer.MAX_VALUE;
 	
