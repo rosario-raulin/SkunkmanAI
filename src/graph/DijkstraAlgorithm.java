@@ -19,8 +19,8 @@ public final class DijkstraAlgorithm<E> implements IPathFinder<E> {
 	
 	public DijkstraAlgorithm(IGraph<E> graph) {
 		this.graph = graph;
-		this.preds = new HashMap<E, E>();
-		this.distances = new Hashtable<E, Integer>();
+		this.preds = new HashMap<E, E>(graph.size());
+		this.distances = new Hashtable<E, Integer>(graph.size());
 	}
 	
 	private Stack<E> reconstructShortestPath(E target) {
@@ -51,7 +51,8 @@ public final class DijkstraAlgorithm<E> implements IPathFinder<E> {
 	@Override
 	public Stack<E> findPath(E from, E to) {
 		if (!from.equals(lastStartingPoint)) {
-			PriorityQueue<E> nodes = new PriorityQueue<E>(graph.size(), new Comparator<E>() {
+			PriorityQueue<E> nodes
+				= new PriorityQueue<E>(graph.size(), new Comparator<E>() {
 				@Override
 				public int compare(E o1, E o2) {
 					return distances.get(o1) - distances.get(o2);
@@ -65,7 +66,8 @@ public final class DijkstraAlgorithm<E> implements IPathFinder<E> {
 				
 				for (final E succ : graph.getSuccessors(next)) {
 					if (nodes.contains(succ)) {
-						int alternative = distances.get(next) + graph.getWeight(next, succ);
+						int alternative
+							= distances.get(next) +	graph.getWeight(next, succ);
 						if (alternative < distances.get(succ)) {
 							distances.put(succ, alternative);
 							preds.put(succ, next);

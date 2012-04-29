@@ -34,6 +34,10 @@ public final class AdjacencyList<E> implements IGraph<E> {
 		nodes = new Hashtable<E, List<Edge<E>>>();
 	}
 	
+	public AdjacencyList(int initialCapacity) {
+		nodes = new Hashtable<E, List<Edge<E>>>(initialCapacity);
+	}
+	
 	@Override
 	public Iterator<E> iterator() {
 		return nodes.keySet().iterator();
