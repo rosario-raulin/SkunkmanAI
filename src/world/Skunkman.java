@@ -1,6 +1,6 @@
 package world;
 
-public final class Skunkman extends AbstractWorldObject {
+public final class Skunkman extends AbstractWO {
 
 	Skunkman(int x, int y) {
 		super(x, y);
@@ -12,7 +12,7 @@ public final class Skunkman extends AbstractWorldObject {
 	}
 
 	@Override
-	public WorldObjectRating rating() {
-		return WorldObjectRating.AVOID;
+	public WORating rating() {
+		return WORating.AVOID;
 	}
 }

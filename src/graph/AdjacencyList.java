@@ -58,7 +58,7 @@ public final class AdjacencyList<E> implements IGraph<E> {
 	}
 
 	private List<Edge<E>> getEdges(E from) {
-		List<Edge<E>> edges = nodes.get(from);
+		final List<Edge<E>> edges = nodes.get(from);
 		if (edges == null) {
 			throw new RuntimeException("Node not in graph: " + from);
 		} else {
@@ -67,7 +67,7 @@ public final class AdjacencyList<E> implements IGraph<E> {
 	}
 	
 	private int indexOfEdge(E from, E to) {
-		int index = getSuccessors(from).indexOf(to);
+		final int index = getSuccessors(from).indexOf(to);
 		if (index == -1) {
 			throw new RuntimeException("Edge not found: from " + from + " to " + to);
 		} else {
@@ -103,7 +103,7 @@ public final class AdjacencyList<E> implements IGraph<E> {
 
 	@Override
 	public List<E> getSuccessors(E node) {
-		List<E> succs = new ArrayList<E>();
+		final List<E> succs = new ArrayList<E>();
 		
 		for (final Edge<E> e : getEdges(node)) {
 			succs.add(e.getTo());

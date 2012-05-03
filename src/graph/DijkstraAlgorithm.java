@@ -24,7 +24,7 @@ public final class DijkstraAlgorithm<E> implements IPathFinder<E> {
 	}
 	
 	private Stack<E> reconstructShortestPath(E target) {
-		Stack<E> path = new Stack<E>();
+		final Stack<E> path = new Stack<E>();
 		
 		E entry = target;
 		while (preds.get(entry) != null) {
@@ -66,7 +66,7 @@ public final class DijkstraAlgorithm<E> implements IPathFinder<E> {
 				
 				for (final E succ : graph.getSuccessors(next)) {
 					if (nodes.contains(succ)) {
-						int alternative
+						final int alternative
 							= distances.get(next) +	graph.getWeight(next, succ);
 						if (alternative < distances.get(succ)) {
 							distances.put(succ, alternative);

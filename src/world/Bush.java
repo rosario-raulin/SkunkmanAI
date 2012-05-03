@@ -1,6 +1,6 @@
 package world;
 
-public final class Bush extends AbstractWorldObject {
+public final class Bush extends AbstractWO {
 
 	Bush(int x, int y) {
 		super(x, y);
@@ -12,7 +12,7 @@ public final class Bush extends AbstractWorldObject {
 	}
 
 	@Override
-	public WorldObjectRating rating() {
-		return WorldObjectRating.BAD;
+	public WORating rating() {
+		return WORating.BAD;
 	}
 }

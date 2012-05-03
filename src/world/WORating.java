@@ -1,6 +1,6 @@
 package world;
 
-enum WorldObjectRating {
+enum WORating {
 	
 	GOOD (5),
 	OKAY (10),
@@ -9,7 +9,7 @@ enum WorldObjectRating {
 	
 	private int value;
 	
-	private WorldObjectRating(int value) {
+	private WORating(int value) {
 		this.value = value;
 	}
 	

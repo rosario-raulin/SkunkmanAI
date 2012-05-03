@@ -1,6 +1,6 @@
 package world;
 
-public final class Stone extends AbstractWorldObject {
+public final class Stone extends AbstractWO {
 
 	Stone(int x, int y) {
 		super(x, y);
@@ -12,7 +12,7 @@ public final class Stone extends AbstractWorldObject {
 	}
 	
 	@Override
-	public WorldObjectRating rating() {
-		return WorldObjectRating.AVOID;
+	public WORating rating() {
+		return WORating.AVOID;
 	}
 }

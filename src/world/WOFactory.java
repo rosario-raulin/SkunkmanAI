@@ -2,11 +2,11 @@ package world;
 
 import apoSkunkman.ai.ApoSkunkmanAIConstants;
 
-public final class WorldFactory {
+public final class WOFactory {
 
-	private WorldFactory() {}
+	private WOFactory() {}
 	
-	public static AbstractWorldObject createWorldObject(int type, int x,
+	public static AbstractWO createWorldObject(int type, int x,
 			int y) {
 		switch (type) {
 		case ApoSkunkmanAIConstants.LEVEL_FREE:

@@ -1,6 +1,6 @@
 package world;
 
-public final class FreeField extends AbstractWorldObject {
+public final class FreeField extends AbstractWO {
 
 	FreeField(int x, int y) {
 		super(x, y);
@@ -12,8 +12,8 @@ public final class FreeField extends AbstractWorldObject {
 	}
 
 	@Override
-	public WorldObjectRating rating() {
-		return WorldObjectRating.GOOD;
+	public WORating rating() {
+		return WORating.GOOD;
 	}
 
 }

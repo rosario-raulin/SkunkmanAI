@@ -2,11 +2,11 @@ package world;
 
 import java.awt.Point;
 
-public abstract class AbstractWorldObject {
+public abstract class AbstractWO {
 	
 	protected final Point position;
 	
-	AbstractWorldObject(int x, int y) {
+	AbstractWO(int x, int y) {
 		this.position = new Point(x, y);
 	}
 	
@@ -22,6 +22,6 @@ public abstract class AbstractWorldObject {
 		return new Point(position);
 	}
 	
-	public abstract WorldObjectRating rating();
+	public abstract WORating rating();
 	public abstract boolean isWalkable();
 }
