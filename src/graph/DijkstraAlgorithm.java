@@ -7,6 +7,8 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 import java.util.Comparator;
 
+// FIXME: check this implementation, I expect it to be wrong!
+
 public final class DijkstraAlgorithm<E> implements IPathFinder<E> {
 
 	private final static Integer INFINITY = Integer.MAX_VALUE;
@@ -27,7 +29,7 @@ public final class DijkstraAlgorithm<E> implements IPathFinder<E> {
 		final Stack<E> path = new Stack<E>();
 		
 		E entry = target;
-		while (preds.get(entry) != null) {
+		while (entry != null) {
 			path.push(entry);
 			entry = preds.get(entry);
 		}

@@ -40,7 +40,10 @@ public final class Map {
 			for (final AbstractWO obj : f) {
 				graph.addNode(obj);
 				
-				for (final AbstractWO succ : getSuccessors(obj)) {
+				List<AbstractWO> succs = getSuccessors(obj);
+				// System.out.println("Successors of " + obj.getPosition());
+				for (final AbstractWO succ : succs) {
+					// System.out.println(succ.getPosition());
 					graph.addEdge(obj, succ, succ.rating().getValue());
 				}
 			}
@@ -63,7 +66,7 @@ public final class Map {
 		if (x + 1 < fields.length && fields[x + 1][y].isWalkable()) {
 			succs.add(fields[x + 1][y]); // right
 		}
-		if (x - 1 >= fields.length && fields[x - 1][y].isWalkable()) {
+		if (x - 1 >= 0 && fields[x - 1][y].isWalkable()) {
 			succs.add(fields[x - 1][y]); // left
 		}
 		
