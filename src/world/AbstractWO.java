@@ -22,6 +22,27 @@ public abstract class AbstractWO {
 		return new Point(position);
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (this == obj) {
+			return true;
+		}
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+		final AbstractWO otherWO = (AbstractWO)obj;
+		return position.equals(otherWO.getPosition());
+	}
+	
+	@Override
+	public int hashCode() {
+		final int PRIME = 23;
+		return PRIME * position.hashCode();
+	}
+	
 	public abstract WORating rating();
 	public abstract boolean isWalkable();
 }
