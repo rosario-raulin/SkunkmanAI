@@ -8,6 +8,7 @@ import java.util.Stack;
 import java.util.Comparator;
 
 // FIXME: check this implementation, I expect it to be wrong!
+// UPDATE: Yes, this implementation is full of bugs! A* works fine, try it!
 
 public final class DijkstraAlgorithm<E> implements IPathFinder<E> {
 

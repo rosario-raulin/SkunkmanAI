@@ -27,8 +27,9 @@ public class IShortestPathAlgorithmTest {
 		graph.addEdge("C", "D", 5);
 		graph.addEdge("D", "F", 12);
 		
-		IPathFinder<String> pathfinder = new DijkstraAlgorithm<String>(graph);
-
+		// IPathFinder<String> pathfinder = new DijkstraAlgorithm<String>(graph);
+		IPathFinder<String> pathfinder = new AStarAlgorithm<String>(graph);
+		
 		Stack<String> path = pathfinder.findPath("A", "F");
 		assertTrue(path.pop().equals("B"));
 		assertTrue(path.pop().equals("E"));

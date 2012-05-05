@@ -9,6 +9,8 @@ import graph.IPathFinder;
 import apoSkunkman.ai.ApoSkunkmanAILevel;
 import apoSkunkman.ai.ApoSkunkmanAIPlayer;
 
+// FIXME: Remodel this, it's not flexible enough!
+
 public final class Bot {
 
 	private ApoSkunkmanAIPlayer ai;

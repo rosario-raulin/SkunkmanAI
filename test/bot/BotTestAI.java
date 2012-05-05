@@ -1,6 +1,7 @@
 package bot;
 
-import graph.DijkstraAlgorithm;
+import graph.AStarAlgorithm;
+// import graph.DijkstraAlgorithm;
 import graph.IPathFinder;
 import world.Map;
 import world.AbstractWO;
@@ -25,19 +26,11 @@ public final class BotTestAI extends ApoSkunkmanAI {
 
 	@Override
 	public void think(ApoSkunkmanAILevel level, ApoSkunkmanAIPlayer player) {
-		if (bot == null) {
-			Map map = new Map(level);
-			IPathFinder<AbstractWO> pathfinder
-				= new DijkstraAlgorithm<AbstractWO>(map.asGraph());
-			bot = new Bot(player, map, pathfinder);
-		}
-		
-		try {
-			bot.moveTo(level.getGoalXPoint());
-		} catch (RuntimeException e) {
-			System.err.println("You should fix: " + e);
-			bot = null;
-		}
+		Map map = new Map(level);
+		IPathFinder<AbstractWO> pathfinder =
+				// new DijkstraAlgorithm<AbstractWO>(map.asGraph());
+				new AStarAlgorithm<AbstractWO>(map.asGraph());
+		bot = new Bot(player, map, pathfinder);
+		bot.moveTo(level.getGoalXPoint());
 	}
-
 }
