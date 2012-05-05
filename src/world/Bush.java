@@ -1,6 +1,6 @@
 package world;
 
-public final class Bush extends AbstractWO {
+final class Bush extends AbstractWO {
 
 	Bush(int x, int y) {
 		super(x, y);

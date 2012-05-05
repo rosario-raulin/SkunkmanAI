@@ -1,6 +1,6 @@
 package world;
 
-public final class Skunkman extends AbstractWO {
+final class Skunkman extends AbstractWO {
 
 	Skunkman(int x, int y) {
 		super(x, y);

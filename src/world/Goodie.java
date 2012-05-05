@@ -1,6 +1,6 @@
 package world;
 
-public final class Goodie extends AbstractWO {
+final class Goodie extends AbstractWO {
 
 	Goodie(int x, int y) {
 		super(x, y);

@@ -1,6 +1,6 @@
 package world;
 
-public final class FreeField extends AbstractWO {
+final class FreeField extends AbstractWO {
 
 	FreeField(int x, int y) {
 		super(x, y);

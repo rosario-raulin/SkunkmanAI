@@ -1,6 +1,6 @@
 package world;
 
-public final class Stone extends AbstractWO {
+final class Stone extends AbstractWO {
 
 	Stone(int x, int y) {
 		super(x, y);
