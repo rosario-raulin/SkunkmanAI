@@ -15,4 +15,9 @@ final class Skunkman extends AbstractWO {
 	public WORating rating() {
 		return WORating.AVOID;
 	}
+
+	@Override
+	public boolean isBlocked() {
+		return true;
+	}
 }

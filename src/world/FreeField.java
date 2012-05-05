@@ -16,4 +16,9 @@ final class FreeField extends AbstractWO {
 		return WORating.GOOD;
 	}
 
+	@Override
+	public boolean isBlocked() {
+		return false;
+	}
+
 }

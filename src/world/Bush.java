@@ -15,4 +15,9 @@ final class Bush extends AbstractWO {
 	public WORating rating() {
 		return WORating.BAD;
 	}
+
+	@Override
+	public boolean isBlocked() {
+		return true;
+	}
 }

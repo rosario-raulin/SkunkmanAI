@@ -18,6 +18,7 @@ public final class AStarAlgorithm<E> implements IPathFinder<E> {
 	
 	@Override
 	public Stack<E> findPath(E from, E to) throws NoPathFoundException {
+		// System.out.println("Calc a path");
 		final int mapSize = (4*graph.size())/3;
 		final Map<E, Integer> fValues = new HashMap<E, Integer>(mapSize);
 		final Map<E, Integer> gValues = new HashMap<E, Integer>(mapSize);

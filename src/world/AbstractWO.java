@@ -50,4 +50,5 @@ public abstract class AbstractWO {
 	
 	public abstract WORating rating();
 	public abstract boolean isWalkable();
+	public abstract boolean isBlocked();
 }

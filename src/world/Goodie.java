@@ -16,4 +16,9 @@ final class Goodie extends AbstractWO {
 		return WORating.OKAY;
 	}
 
+	@Override
+	public boolean isBlocked() {
+		return false;
+	}
+
 }
