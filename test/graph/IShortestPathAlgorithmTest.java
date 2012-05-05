@@ -30,10 +30,14 @@ public class IShortestPathAlgorithmTest {
 		// IPathFinder<String> pathfinder = new DijkstraAlgorithm<String>(graph);
 		IPathFinder<String> pathfinder = new AStarAlgorithm<String>(graph);
 		
-		Stack<String> path = pathfinder.findPath("A", "F");
-		assertTrue(path.pop().equals("B"));
-		assertTrue(path.pop().equals("E"));
-		assertTrue(path.pop().equals("F"));
+		try {
+			Stack<String> path = pathfinder.findPath("A", "F");
+			assertTrue(path.pop().equals("B"));
+			assertTrue(path.pop().equals("E"));
+			assertTrue(path.pop().equals("F"));
+		} catch (NoPathFoundException e) {
+			fail(e.toString());
+		}
 	}
 
 }

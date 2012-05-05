@@ -23,6 +23,11 @@ public abstract class AbstractWO {
 	}
 	
 	@Override
+	public String toString() {
+		return position.toString();
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;

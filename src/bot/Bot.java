@@ -6,6 +6,7 @@ import java.util.Stack;
 import world.AbstractWO;
 import world.Map;
 import graph.IPathFinder;
+import graph.NoPathFoundException;
 import apoSkunkman.ai.ApoSkunkmanAILevel;
 import apoSkunkman.ai.ApoSkunkmanAIPlayer;
 
@@ -36,7 +37,7 @@ public final class Bot {
 		this.map = map;
 	}
 	
-	public void moveTo(ApoSkunkmanAILevel level) {
+	public void moveTo(ApoSkunkmanAILevel level) throws NoPathFoundException {
 		Point target = level.getGoalXPoint();
 		if (target.x == -1) {
 			throw new IllegalArgumentException("Not in GoalX mode!");
@@ -45,11 +46,11 @@ public final class Bot {
 		}
 	}
 	
-	public void moveTo(int x, int y) {
+	public void moveTo(int x, int y) throws NoPathFoundException {
 		moveTo(new Point(x, y));
 	}
 	
-	public void moveTo(Point p) {
+	public void moveTo(Point p) throws NoPathFoundException {
 		if (lastTarget == null || path == null || !p.equals(lastTarget)
 				|| path.isEmpty()) {
 			lastTarget = p;
@@ -77,7 +78,7 @@ public final class Bot {
 		}
 	}
 	
-	private Stack<AbstractWO> calcPath(Point p) {
+	private Stack<AbstractWO> calcPath(Point p) throws NoPathFoundException {
 		AbstractWO from = map.getField(ai.getPlayerX(), ai.getPlayerY());
 		AbstractWO to = map.getField(p);
 		

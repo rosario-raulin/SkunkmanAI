@@ -17,7 +17,7 @@ public final class AStarAlgorithm<E> implements IPathFinder<E> {
 	}
 	
 	@Override
-	public Stack<E> findPath(E from, E to) {
+	public Stack<E> findPath(E from, E to) throws NoPathFoundException {
 		final Map<E, Integer> fValues = new HashMap<E, Integer>(graph.size());
 		final Map<E, Integer> gValues = new HashMap<E, Integer>(graph.size());
 		final Map<E, E> preds = new HashMap<E, E>(graph.size());
@@ -62,7 +62,7 @@ public final class AStarAlgorithm<E> implements IPathFinder<E> {
 			closedList.add(current);
 		} while (!openList.isEmpty());
 
-		return null; // TODO: Isn't it better to throw an exception here??
+		throw new NoPathFoundException(to);
 	}
 	
 	private Stack<E> reconstructPath(final E to, final Map<E,E> preds) {

@@ -1,6 +1,7 @@
 package bot;
 
 import graph.AStarAlgorithm;
+import graph.NoPathFoundException;
 // import graph.DijkstraAlgorithm;
 import graph.IPathFinder;
 import world.Map;
@@ -31,6 +32,10 @@ public final class BotTestAI extends ApoSkunkmanAI {
 				// new DijkstraAlgorithm<AbstractWO>(map.asGraph());
 				new AStarAlgorithm<AbstractWO>(map.asGraph());
 		bot = new Bot(player, map, pathfinder);
-		bot.moveTo(level.getGoalXPoint());
+		try {
+			bot.moveTo(level.getGoalXPoint());
+		} catch (NoPathFoundException e) {
+			System.err.println("No path found: " + e);
+		}
 	}
 }
