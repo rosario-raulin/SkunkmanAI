@@ -18,12 +18,13 @@ public final class AStarAlgorithm<E> implements IPathFinder<E> {
 	
 	@Override
 	public Stack<E> findPath(E from, E to) throws NoPathFoundException {
-		final Map<E, Integer> fValues = new HashMap<E, Integer>(graph.size());
-		final Map<E, Integer> gValues = new HashMap<E, Integer>(graph.size());
-		final Map<E, E> preds = new HashMap<E, E>(graph.size());
+		final int mapSize = (4*graph.size())/3;
+		final Map<E, Integer> fValues = new HashMap<E, Integer>(mapSize);
+		final Map<E, Integer> gValues = new HashMap<E, Integer>(mapSize);
+		final Map<E, E> preds = new HashMap<E, E>(mapSize);
 		
-		final Set<E> closedList = new HashSet<E>(graph.size());
-		final PriorityQueue<E> openList = new PriorityQueue<E>(graph.size(),
+		final Set<E> closedList = new HashSet<E>(mapSize);
+		final PriorityQueue<E> openList = new PriorityQueue<E>(mapSize,
 				new Comparator<E>() {
 					@Override
 					public int compare(final E o1, final E o2) {

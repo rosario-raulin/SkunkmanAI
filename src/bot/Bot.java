@@ -4,84 +4,45 @@ import java.awt.Point;
 import java.util.Stack;
 
 import world.AbstractWO;
-import world.Map;
-import graph.IPathFinder;
-import graph.NoPathFoundException;
-import apoSkunkman.ai.ApoSkunkmanAILevel;
-import apoSkunkman.ai.ApoSkunkmanAIPlayer;
 
-// FIXME: Remodel this, it's not flexible enough!
+import apoSkunkman.ai.ApoSkunkmanAIPlayer;
 
 public final class Bot {
 
-	private ApoSkunkmanAIPlayer ai;
-	private IPathFinder<AbstractWO> pathfinder;
-	private Map map;
-	private Stack<AbstractWO> path;
-	private Point lastTarget;
-	
-	
-	public Bot(ApoSkunkmanAIPlayer ai, Map map,
-			IPathFinder<AbstractWO> pathfinder) {
+	private final ApoSkunkmanAIPlayer ai;
+
+	public Bot(final ApoSkunkmanAIPlayer ai) {
 		this.ai = ai;
-		this.pathfinder = pathfinder;
-		this.map = map;
 	}
 	
-	public void reset(ApoSkunkmanAIPlayer ai, Map map,
-			IPathFinder<AbstractWO> pathfinder) {
-		path = null;
-		lastTarget = null;
-		this.ai = ai;
-		this.pathfinder = pathfinder;
-		this.map = map;
-	}
+	public void moveTo(final Point p) {
+		final int xDiff = ai.getPlayerX() - p.x;
+		final int yDiff = ai.getPlayerY() - p.y;
 	
-	public void moveTo(ApoSkunkmanAILevel level) throws NoPathFoundException {
-		Point target = level.getGoalXPoint();
-		if (target.x == -1) {
-			throw new IllegalArgumentException("Not in GoalX mode!");
-		} else {
-			moveTo(level.getGoalXPoint());
-		}
-	}
-	
-	public void moveTo(int x, int y) throws NoPathFoundException {
-		moveTo(new Point(x, y));
-	}
-	
-	public void moveTo(Point p) throws NoPathFoundException {
-		if (lastTarget == null || path == null || !p.equals(lastTarget)
-				|| path.isEmpty()) {
-			lastTarget = p;
-			path = calcPath(p);
-			
-			if (path.isEmpty()) {
-				throw new RuntimeException("No path to target found: " + p);
-			}
-		}
-		
-		AbstractWO next = path.pop();
-		System.out.println("Next step is: " + next.getPosition());
-		int xDifference = ai.getPlayerX() - next.getX();
-		int yDifference = ai.getPlayerY() - next.getY();
-		
-		if (xDifference > 0) {
-			ai.movePlayerLeft();
-		} else if (xDifference < 0) {
+		if (xDiff == -1) {
 			ai.movePlayerRight();
-		} else if (yDifference > 0) {
+		} else if (xDiff == 1) {
+			ai.movePlayerLeft();
+		} else if (yDiff == 1) {
 			ai.movePlayerUp();
 		} else {
-			assert(yDifference < 0);
-			ai.movePlayerDown();
+			if (yDiff != -1) {
+				throw new IllegalArgumentException("Cannot move directly: " + p);
+			} else {
+				ai.movePlayerDown();
+			}
 		}
 	}
 	
-	private Stack<AbstractWO> calcPath(Point p) throws NoPathFoundException {
-		AbstractWO from = map.getField(ai.getPlayerX(), ai.getPlayerY());
-		AbstractWO to = map.getField(p);
-		
-		return pathfinder.findPath(from, to);
+	public void moveTo(AbstractWO obj) {
+		moveTo(obj.getPosition());
+	}
+	
+	public void moveTo(final Stack<AbstractWO> path) {
+		moveTo(path.pop());
+	}
+	
+	public Point getPosition() {
+		return new Point(ai.getPlayerX(), ai.getPlayerY());
 	}
 }

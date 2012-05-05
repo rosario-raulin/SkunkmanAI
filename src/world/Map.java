@@ -12,8 +12,8 @@ public final class Map {
 
 	private final AbstractWO[][] fields;
 	
-	public Map(ApoSkunkmanAILevel level) {
-		byte[][] field = level.getLevelAsByte();
+	public Map(final ApoSkunkmanAILevel level) {
+		final byte[][] field = level.getLevelAsByte();
 		fields = new AbstractWO[field[0].length][field.length];
 		
 		for (int x = 0; x < field[0].length; ++x) {
@@ -23,19 +23,20 @@ public final class Map {
 		}
 	}
 	
-	public AbstractWO getField(int x, int y) {
+	public AbstractWO getField(final int x, final int y) {
 		return fields[x][y];
 	}
 	
-	public AbstractWO getField(Point pos) {
+	public AbstractWO getField(final Point pos) {
 		return getField(pos.x, pos.y);
 	}
 	
 	public IGraph<AbstractWO> asGraph() {
-		return asGraph(new AdjacencyList<AbstractWO>());
+		final int graphSize = (4*fields.length)/3;
+		return asGraph(new AdjacencyList<AbstractWO>(graphSize));
 	}
 	
-	public IGraph<AbstractWO> asGraph(IGraph<AbstractWO> graph) {
+	public IGraph<AbstractWO> asGraph(final IGraph<AbstractWO> graph) {
 		for (final AbstractWO[] f : fields) {
 			for (final AbstractWO obj : f) {
 				graph.addNode(obj);

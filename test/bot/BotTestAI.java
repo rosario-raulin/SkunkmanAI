@@ -1,8 +1,10 @@
 package bot;
 
+import java.util.Stack;
+
 import graph.AStarAlgorithm;
+import graph.IGraph;
 import graph.NoPathFoundException;
-// import graph.DijkstraAlgorithm;
 import graph.IPathFinder;
 import world.Map;
 import world.AbstractWO;
@@ -14,6 +16,7 @@ import apoSkunkman.ai.ApoSkunkmanAIPlayer;
 public final class BotTestAI extends ApoSkunkmanAI {
 
 	private Bot bot = null;
+	private Stack<AbstractWO> path = null;
 	
 	@Override
 	public String getPlayerName() {
@@ -27,15 +30,24 @@ public final class BotTestAI extends ApoSkunkmanAI {
 
 	@Override
 	public void think(ApoSkunkmanAILevel level, ApoSkunkmanAIPlayer player) {
-		Map map = new Map(level);
-		IPathFinder<AbstractWO> pathfinder =
-				// new DijkstraAlgorithm<AbstractWO>(map.asGraph());
-				new AStarAlgorithm<AbstractWO>(map.asGraph());
-		bot = new Bot(player, map, pathfinder);
-		try {
-			bot.moveTo(level.getGoalXPoint());
-		} catch (NoPathFoundException e) {
-			System.err.println("No path found: " + e);
+		if (bot == null) {
+			bot = new Bot(player);
 		}
+		if (path == null || path.isEmpty()) {
+			Map map = new Map(level);
+			IGraph<AbstractWO> graph = map.asGraph();
+			IPathFinder<AbstractWO> pf = new AStarAlgorithm<AbstractWO>(graph);
+			
+			AbstractWO from = map.getField(bot.getPosition());
+			AbstractWO to = map.getField(level.getGoalXPoint());
+			
+			try {
+				path = pf.findPath(from, to);
+			} catch (NoPathFoundException e) {
+				System.err.println(e.toString());
+				return;
+			}
+		}
+		bot.moveTo(path);
 	}
 }
