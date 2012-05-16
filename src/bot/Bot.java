@@ -15,7 +15,7 @@ public final class Bot {
 		this.ai = ai;
 	}
 	
-	public void moveTo(final Point p) {
+	public void moveTo(final Point p) throws ImpossibleMovementException {
 		final int xDiff = ai.getPlayerX() - p.x;
 		final int yDiff = ai.getPlayerY() - p.y;
 	
@@ -27,22 +27,36 @@ public final class Bot {
 			ai.movePlayerUp();
 		} else {
 			if (yDiff != -1) {
-				throw new IllegalArgumentException("Cannot move directly: " + p);
+				throw new ImpossibleMovementException();
 			} else {
 				ai.movePlayerDown();
 			}
 		}
 	}
 	
-	public void moveTo(AbstractWO obj) {
-		moveTo(obj.getPosition());
+	public void moveTo(AbstractWO obj)
+			throws WayIsBlockedException, ImpossibleMovementException {
+		if (obj.isBlocked()) {
+			throw new WayIsBlockedException();
+		} else {
+			moveTo(obj.getPosition());
+		}
 	}
 	
-	public void moveTo(final Stack<AbstractWO> path) {
+	public void moveTo(final Stack<AbstractWO> path)
+			throws WayIsBlockedException, ImpossibleMovementException {
 		moveTo(path.pop());
 	}
 	
 	public Point getPosition() {
 		return new Point(ai.getPlayerX(), ai.getPlayerY());
+	}
+	
+	public void laySkunkman() {
+		ai.laySkunkman();
+	}
+	
+	public int getSkunkmanRange() {
+		return ai.getSkunkWidth();
 	}
 }

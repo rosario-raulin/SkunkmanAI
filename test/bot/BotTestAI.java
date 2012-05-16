@@ -48,6 +48,13 @@ public final class BotTestAI extends ApoSkunkmanAI {
 				return;
 			}
 		}
-		bot.moveTo(path);
+		try {
+			bot.moveTo(path);
+		} catch (WayIsBlockedException e) {
+			System.err.println("Error: way is blocked!");
+		} catch (ImpossibleMovementException e) {
+			bot = null;
+			path = null;
+		}
 	}
 }
