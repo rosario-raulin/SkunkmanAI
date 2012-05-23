@@ -10,7 +10,7 @@ import bot.WayIsBlockedException;
 import world.AbstractWO;
 import world.EMapMode;
 import world.Map;
-import graph.AStarAlgorithm;
+import graph.DijkstraAlgorithm;
 import graph.IPathFinder;
 import graph.NoPathFoundException;
 
@@ -26,7 +26,7 @@ public final class FindSaferPlace extends AbstractSkunkmanState {
 		final Bot bot = fsm.getBot();
 		final AbstractWO from = map.getField(fsm.getBot().getPosition());
 		final IPathFinder<AbstractWO> pf =
-				new AStarAlgorithm<AbstractWO>(map.asGraph(EMapMode.STRICT));
+				new DijkstraAlgorithm<AbstractWO>(map.asGraph(EMapMode.STRICT));
 		
 		Stack<AbstractWO> candidate = null;
 		
@@ -91,9 +91,9 @@ public final class FindSaferPlace extends AbstractSkunkmanState {
 				try {
 					fsm.getBot().moveTo(saferPlace);
 				} catch (ImpossibleMovementException e) {
-					e.printStackTrace();
+					fsm.changeState(new FindSaferPlace());
 				} catch (WayIsBlockedException e) {
-					e.printStackTrace();
+					fsm.changeState(new FindSaferPlace());
 				}
 			}
 			

@@ -27,8 +27,8 @@ public class IPathFinderTest {
 		graph.addEdge("C", "D", 5);
 		graph.addEdge("D", "F", 12);
 		
-		// IPathFinder<String> pathfinder = new DijkstraAlgorithm<String>(graph);
-		IPathFinder<String> pathfinder = new AStarAlgorithm<String>(graph);
+		IPathFinder<String> pathfinder = new DijkstraAlgorithm<String>(graph);
+		//IPathFinder<String> pathfinder = new AStarAlgorithm<String>(graph);
 		
 		try {
 			Stack<String> path = pathfinder.findPath("A", "F");
